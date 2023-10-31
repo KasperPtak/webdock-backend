@@ -7,7 +7,10 @@ const getUserWithRole = (req, res) => {
   }).then((users) => {
     // Your response handling logic here
     res.json(users);
-  });
+  }).catch((e) => {
+    console.log(e)
+    res.sendStatus(500)
+  })
 };
 
 module.exports = {
