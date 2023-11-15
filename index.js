@@ -16,13 +16,23 @@ app.get('/', (req, res) => {
 });
 
 app.post('/verify', async (req, res) => {
-    const { ssoToken } = req.body;
+    try {
+        const { ssoToken } = req.body;
 
-    const user = jwt.verify(ssoToken, 'e389bb7b-dc58-4b0b-8f54-dac159d5a609')
+        if (!ssoToken) {
+            return res.status(400).json({ error: 'Token is missing' });
+        }
 
-    console.log(user);
-    res.json(user)
+        const user = jwt.verify(ssoToken, 'e389bb7b-dc58-4b0b-8f54-dac159d5a609');
+
+        console.log(user);
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(401).json({ error: 'Invalid token' });
+    }
 });
+
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
