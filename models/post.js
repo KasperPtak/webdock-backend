@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       Post.belongsTo(models.PostHasComments, {
         foreignKey: 'id'
       })
+      Post.belongsTo(models.Comment, { foreignKey: 'id' });
+
       // define association here
     }
   }

@@ -5,14 +5,14 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('PostHasComments', [
       {
-        post_id:1,
-        comment_id:2,
+        post_id: 1,
+        comment_id: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        post_id:2,
-        comment_id:3,
+        post_id: 2,
+        comment_id: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
