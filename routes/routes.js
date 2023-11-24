@@ -1,9 +1,32 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // routes/userRoutes.js
 const express = require('express');
-const userController = require('../controllers/userController');
+const UserController = require('../controllers/UserController.js');
 
 const router = express.Router();
 
-router.get('/usersWithRoles', userController.getUserWithRole);
+// router.get('/users', (req, res) => {
+//     res.send("ajajaj Fuck it")
+// });
+router.get('/users', UserController.getUserWithRole);
+
+// router.get('/users', (req, res) => {
+//     res.send('Hellow Kenneth')
+// })
 
 module.exports = router;

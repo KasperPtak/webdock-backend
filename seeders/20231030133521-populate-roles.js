@@ -7,13 +7,20 @@ module.exports = {
     await queryInterface.bulkInsert('Roles', [
       {
           role_name: 'user',
+          createdAt: new Date(),
+          updatedAt: new Date(),
       },
       {
           role_name: 'admin',
+          createdAt: new Date(),
+          updatedAt: new Date(),
       },
       {
-          role_name: 'super_admin'
-      }
+          role_name: 'super_admin',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+
+      },
     ], {});
     /**
      * Add seed commands here.
