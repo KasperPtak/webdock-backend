@@ -2,7 +2,6 @@
 const express = require('express');
 const UserController = require('../controllers/userController.js');
 const PostController = require('../controllers/postController.js')
-const CommentController = require('../controllers/commentController.js')
 const CategoryController = require('../controllers/categoryController.js')
 
 const router = express.Router();
@@ -18,7 +17,7 @@ router.get('/completedPosts', PostController.getCompletedPosts);
 
 router.get('/getCategories', CategoryController.getCategories);
 
-router.get('/getSinglePostFromComment/:postId', CommentController.getPostWithCommentsFromComment); // composite router her senere
+router.get('/getSinglePostFromComment/:postId', PostController.getSinglePost); // composite router her senere
 
 
 module.exports = router;

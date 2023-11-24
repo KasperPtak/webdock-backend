@@ -24,6 +24,9 @@ module.exports = {
       like_id: {
         type: Sequelize.INTEGER
       },
+      // reply_id: {
+      //   type: Sequelize.INTEGER
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
