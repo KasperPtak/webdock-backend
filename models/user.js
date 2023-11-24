@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      User.belongsTo(models.Role, {
-        foreignKey: 'roleId'
-      })
-      // define association here
-    }
+    // static associate(models) {
+    //   User.belongsTo(models.Role, {
+    //     foreignKey: 'roleId'
+    //   })
+    //   // define association here
+    // }
   }
   User.init({
     email: DataTypes.STRING,
@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     username: DataTypes.STRING,
     last_login: DataTypes.DATE,
-    profile_picture: DataTypes.STRING
+    profile_picture: DataTypes.STRING,
+    isAdmin: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User',

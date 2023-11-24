@@ -34,8 +34,8 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      roleId: {
-        type: Sequelize.INTEGER,
+      isAdmin: {
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
