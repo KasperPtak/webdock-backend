@@ -20,6 +20,8 @@ router.get('/completedPosts', PostController.getCompletedPosts);
 
 router.get('/getCategories', CategoryController.getCategories);
 
+router.get('/getSinglePost', PostController.getPostWithComments); // composite router her senere
+
 // router.get('/users', (req, res) => {
 //     res.send('Hellow Kenneth')
 // })

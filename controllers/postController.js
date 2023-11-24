@@ -86,10 +86,27 @@ const getCompletedPosts = (req, res) => {
   });
 };
 
+
+const getPostWithComments = (req, res) => {
+  db.Post.findAll({
+    include: [{
+      model: db.PostHasComments,
+    }],
+  }).then((posts) => {
+    // Your response handling logic here
+    res.json(posts);
+  }).catch((error) => {
+    console.error(error);
+    res.sendStatus(500);
+  });
+};
+
+
 module.exports = {
   getPostsWithStatus,
   getReviewPosts,
   getPlannedPosts,
   getInProgressPosts,
-  getCompletedPosts
+  getCompletedPosts,
+  getPostWithComments
 };

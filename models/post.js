@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       Post.belongsTo(models.Category, {
         foreignKey: 'category_id'
       })
+      Post.belongsTo(models.PostHasComments, {
+        foreignKey: 'id'
+      })
       // define association here
     }
   }
