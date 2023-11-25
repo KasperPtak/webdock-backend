@@ -13,7 +13,8 @@ router.get('/postsWithStatus', PostController.getPostsWithStatus);
 router.get('/reviewPosts', PostController.getReviewPosts);
 router.get('/plannedPosts', PostController.getPlannedPosts);
 router.get('/inProgressPosts', PostController.getInProgressPosts);
-router.get('/completedPosts', PostController.getCompletedPosts);
+router.get('/completedPosts/:postStatus', PostController.getCompletedPosts);
+router.get('/getAllPostsByStatus/:postStatus', PostController.getAllPostsByStatus);
 
 router.get('/getCategories', CategoryController.getCategories);
 

@@ -84,11 +84,33 @@ const getInProgressPosts = (req, res) => {
 };
 
 const getCompletedPosts = (req, res) => {
+  const postStatus = req.params.postStatus;
   db.Post.findAll({
     include: [
       {
         model: db.Status,
-        where: { status: "Complete" },
+        where: { status: postStatus },
+      },
+    ],
+  })
+    .then((posts) => {
+      // Your response handling logic here
+      res.json(posts);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+// What the fuck were we thinking, this is smarter - Tak niller :*//
+const getAllPostsByStatus = (req, res) => {
+  const postStatus = req.params.postStatus;
+  db.Post.findAll({
+    include: [
+      {
+        model: db.Status,
+        where: { status: postStatus },
       },
     ],
   })
@@ -195,5 +217,6 @@ module.exports = {
   getPlannedPosts,
   getInProgressPosts,
   getCompletedPosts,
-  getSinglePost
+  getSinglePost,
+  getAllPostsByStatus
 };
