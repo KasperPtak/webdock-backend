@@ -103,19 +103,30 @@ const getCompletedPosts = (req, res) => {
     });
 };
 
+// REMOVE
 // What the fuck were we thinking, this is smarter - Tak niller :*//
 const getAllPostsByStatus = (req, res) => {
   const postStatus = req.params.postStatus;
   db.Post.findAll({
+    where: { /* your conditions here */ },
     include: [
       {
         model: db.Status,
         where: { status: postStatus },
       },
+      {
+        model: db.Comment,
+        separate: true,
+        include: [
+          {
+            model: db.Reply,
+            separate: true,
+          },
+        ]
+      },
     ],
   })
     .then((posts) => {
-      // Your response handling logic here
       res.json(posts);
     })
     .catch((error) => {
@@ -124,37 +135,32 @@ const getAllPostsByStatus = (req, res) => {
     });
 };
 
-// const getSinglePost = (req, res) => {
-//   const postId = req.params.postId;
+const post = (req, res) => {
+  const postId = req.params.id;
 
-//   db.Post.findByPk(postId)
-//     .then((post) => {
-//       if (!post) {
-//         return res.status(404).json({ error: 'Post not found' });
-//       }
-
-//       db.Comment.findAll({
-//         where: { post_id: postId },
-//       }) 
-      
-//         .then((comments) => {
-//           const postWithComments = {
-//             post: post,
-//             comments: comments,
-//           };
-          
-//           res.json(postWithComments);
-//         })
-//         .catch((error) => {
-//           console.error(error);
-//           res.sendStatus(500);
-//         });
-//     })
-//   .catch((error) => {
-//     console.error(error);
-//     res.sendStatus(500);
-//   });
-// };
+  db.Post.findByPk(postId, {
+    where: { postId: postId }, 
+    include: [
+      {
+        model: db.Comment,
+        separate: true,
+        include: [
+          {
+            model: db.Reply,
+            separate: true,
+          },
+        ],
+      },
+    ],
+  })
+    .then((post) => {
+      res.json(post);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 
 const getSinglePost = (req, res) => {
   const postId = req.params.postId;
@@ -218,5 +224,6 @@ module.exports = {
   getInProgressPosts,
   getCompletedPosts,
   getSinglePost,
-  getAllPostsByStatus
+  getAllPostsByStatus,
+  post
 };

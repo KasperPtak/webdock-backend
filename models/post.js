@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       Post.belongsTo(models.Category, {
         foreignKey: 'category_id'
       })
-      Post.belongsTo(models.Comment, { foreignKey: 'id' });
+      Post.hasMany(models.Comment, { foreignKey: 'post_id' });
 
       // define association here
     }

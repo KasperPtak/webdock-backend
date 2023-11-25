@@ -19,6 +19,7 @@ router.get('/getAllPostsByStatus/:postStatus', PostController.getAllPostsByStatu
 router.get('/getCategories', CategoryController.getCategories);
 
 router.get('/getSinglePostFromComment/:postId', PostController.getSinglePost); // composite router her senere
+router.get('/post/:id', PostController.post); // composite router her senere
 
 
 module.exports = router;
