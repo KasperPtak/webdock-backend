@@ -3,27 +3,25 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Statuses', [
+    await queryInterface.bulkInsert('PostHasUpvotes', [
       {
-        status: 'Review',
+        user_id: 1,
+        post_id: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        status: 'Planned',
+        user_id: 2,
+        post_id: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        status: 'In_Progress',
+        user_id: 3,
+        post_id: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      {
-        status: 'Complete',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
   ], {});
     /**
      * Add seed commands here.

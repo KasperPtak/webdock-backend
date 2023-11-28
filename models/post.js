@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       Post.belongsTo(models.Category, {
         foreignKey: 'category_id'
       })
+      Post.hasMany(models.Comment, { foreignKey: 'post_id' });
+      // Post.belongsToMany(models.User, {
+      //   through: 'PostHasUpvote',
+      //   foreignKey: 'post_id'
+      // });
       // define association here
     }
   }
