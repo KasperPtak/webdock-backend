@@ -17,5 +17,4 @@ router.get('/postUpvotes/:id', PostController.postIsUpvotedBy); // composite rou
 router.get('/getCategories', CategoryController.getCategories);
 
 
-
 module.exports = router;
