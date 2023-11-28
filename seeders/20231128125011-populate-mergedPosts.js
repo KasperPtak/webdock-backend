@@ -3,31 +3,37 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('PostHasUpvotes', [
+    await queryInterface.bulkInsert('MergedPosts', [
       {
-        user_id: 1,
-        post_id: 5,
+        master_post: 1,
+        child_post: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        user_id: 2,
-        post_id: 5,
+        master_post: 1,
+        child_post: 4,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        user_id: 3,
-        post_id: 5,
+        master_post: 1,
+        child_post: 6,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        user_id: 10,
-        post_id: 5,
+        master_post: 1,
+        child_post: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        master_post: 1,
+        child_post: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
   ], {});
     /**
      * Add seed commands here.

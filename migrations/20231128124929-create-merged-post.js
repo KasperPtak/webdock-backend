@@ -2,39 +2,18 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Posts', {
+    await queryInterface.createTable('MergedPosts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
-      },
-      upvotes: {
+      master_post: {
         type: Sequelize.INTEGER
       },
-      content: {
-        type: Sequelize.STRING
-      },
-      comment_id: {
+      child_post: {
         type: Sequelize.INTEGER
-      },
-      category_id: {
-        type: Sequelize.INTEGER
-      },
-      user_id: {
-        type: Sequelize.INTEGER
-      },
-      upvotes_id: {
-        type: Sequelize.INTEGER
-      },
-      status_id: {
-        type: Sequelize.INTEGER
-      },
-      image: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -47,6 +26,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Posts');
+    await queryInterface.dropTable('MergedPosts');
   }
 };

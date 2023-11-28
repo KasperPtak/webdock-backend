@@ -94,7 +94,7 @@ const postIsUpvotedBy = (req, res) => {
     include: [
       {
         model: db.User,
-        attributes: ['username', 'profile_picture']
+        attributes: ['username', 'profile_picture', 'email']
       }
     ]
   })
@@ -102,10 +102,34 @@ const postIsUpvotedBy = (req, res) => {
       // Extract usernames and profile pictures from the upvotes
       const userInformation = upvotes.map((upvote) => ({
         username: upvote.User.username,
-        profile_picture: upvote.User.profile_picture
+        profile_picture: upvote.User.profile_picture,
+        email: upvote.User.email
       }));
       
       res.json(userInformation);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+// This function is first prio Thursday
+const mergedPost = (req, res) => {
+  const postId = req.params.id;
+
+  db.Post.findByPk(postId, {
+    include: [
+      {
+        model: db.mergedPost,
+        where: {
+          master_post: postId
+        }
+      },
+    ],
+  })
+    .then((post) => {
+      res.json(post);
     })
     .catch((error) => {
       console.error(error);
@@ -117,5 +141,6 @@ module.exports = {
   getPostsWithStatus,
   getAllPostsByStatus,
   postIsUpvotedBy,
-  post
+  post,
+  mergedPost
 };

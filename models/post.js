@@ -10,13 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      
       Post.belongsTo(models.Status, {
         foreignKey: 'status_id'
       })
+      
       Post.belongsTo(models.Category, {
         foreignKey: 'category_id'
       })
-      Post.hasMany(models.Comment, { foreignKey: 'post_id' });
+
+      Post.hasMany(models.Comment, { 
+        foreignKey: 'post_id' 
+      });
       // Post.belongsToMany(models.User, {
       //   through: 'PostHasUpvote',
       //   foreignKey: 'post_id'
@@ -34,7 +39,6 @@ module.exports = (sequelize, DataTypes) => {
     upvotes_id: DataTypes.INTEGER,
     status_id: DataTypes.INTEGER,
     image: DataTypes.STRING,
-    postIsMerged: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Post',
