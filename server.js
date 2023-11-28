@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors())
-const port = 80; // Your desired port number
+const port = 8080; // Your desired port number
 
 app.use('/api/v1', routes);
 
