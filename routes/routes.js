@@ -14,8 +14,6 @@ router.get('/post/:id', PostController.post); // composite router her senere
 router.get('/merged-post/:id', PostController.mergedPost); // composite router her senere
 router.get('/postUpvotes/:id', PostController.postIsUpvotedBy); // composite router her senere
 
-
 router.get('/getCategories', CategoryController.getCategories);
-
 
 module.exports = router;
