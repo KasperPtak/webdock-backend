@@ -13,6 +13,10 @@ const getPostsWithStatus = (req, res) => {
         model: db.Category,
         attributes: ["id", "category"],
       },
+      {
+        model: db.Comment,
+        attributes: ["content"]
+      }
     ],
   })
     .then((posts) => {
@@ -35,17 +39,16 @@ const getAllPostsByStatus = (req, res) => {
       {
         model: db.Status,
         where: { status: postStatus },
+        attributes: ['status']
       },
       {
         model: db.Comment,
         separate: true,
-        include: [
-          {
-            model: db.Reply,
-            separate: true,
-          },
-        ]
       },
+      {
+        model: db.Category,
+        attributes: ['category']
+      }
     ],
   })
     .then((posts) => {
