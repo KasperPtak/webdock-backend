@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Statuses', [
       {
         status: 'Review',
@@ -23,8 +23,13 @@ module.exports = {
         status: 'Complete',
         createdAt: new Date(),
         updatedAt: new Date(),
+      },
+      {
+        status: 'Deprecated',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }
-  ], {});
+    ], {});
     /**
      * Add seed commands here.
      *
@@ -36,7 +41,7 @@ module.exports = {
     */
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *

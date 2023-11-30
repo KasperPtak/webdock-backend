@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Posts', [
       {
         title: 'Introduction to JavaScript',
@@ -68,8 +68,21 @@ module.exports = {
         image: 'debugging_challenges.gif',
         createdAt: new Date(),
         updatedAt: new Date(),
+      },
+      {
+        title: 'Debugging Challenges',
+        upvotes: 55,
+        content: 'Share your most challenging debugging experiences and how you overcame them. Let\'s learn from each other!',
+        comment_id: 156,
+        category_id: 2,
+        user_id: 505,
+        upvotes_id: 45,
+        status_id: 3,
+        image: 'debugging_challenges.gif',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }
-  ], {});
+    ], {});
 
     /**
      * Add seed commands here.
@@ -82,7 +95,7 @@ module.exports = {
     */
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *

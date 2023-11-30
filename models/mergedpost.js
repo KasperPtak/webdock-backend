@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      MergedPost.belongsTo(models.Post, { 
+      MergedPost.belongsTo(models.Post, {
         foreignKey: 'master_post',
       });
-      
-      MergedPost.belongsTo(models.Post, { 
+
+      MergedPost.belongsTo(models.Post, {
         foreignKey: 'child_post',
       });
     }

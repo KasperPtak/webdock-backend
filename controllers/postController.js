@@ -61,7 +61,7 @@ const post = (req, res) => {
   const postId = req.params.id;
 
   db.Post.findByPk(postId, {
-    where: { postId: postId }, 
+    where: { postId: postId },
     include: [
       {
         model: db.Comment,
@@ -105,7 +105,7 @@ const postIsUpvotedBy = (req, res) => {
         profile_picture: upvote.User.profile_picture,
         email: upvote.User.email
       }));
-      
+
       res.json(userInformation);
     })
     .catch((error) => {
@@ -114,26 +114,28 @@ const postIsUpvotedBy = (req, res) => {
     });
 };
 
-// This function is first prio Thursday
 const mergedPost = (req, res) => {
   const postId = req.params.id;
 
-  db.Post.findByPk(postId, {
+  db.MergedPost.findAll({
+    where: {
+      master_post: postId
+    },
     include: [
       {
-        model: db.mergedPost,
-        where: {
-          master_post: postId
-        }
+        model: db.Post,
+        attributes: ["Title"]
       },
     ],
   })
-    .then((post) => {
-      res.json(post);
+    .then((posts) => {
+      const postContents = posts.map(post => post.Post);
+
+      res.json(postContents);
     })
     .catch((error) => {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).send("Internal Server Error");
     });
 };
 
