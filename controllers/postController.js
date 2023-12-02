@@ -144,6 +144,7 @@ const mergedPost = (req, res) => {
 
 const createNewPost = async (req, res) => {
   try {
+    // body:formdata fromn the frontend
     const { title, content, user_id } = req.body;
     const files = req.files;
     
@@ -161,8 +162,10 @@ const createNewPost = async (req, res) => {
 
     res.status(201).json({ message: 'Data saved successfully', data: result });
   } catch (error) {
+    // sequelize error:
     if (error.name === 'SequelizeValidationError') {
       res.status(400).json({ error: 'Validation failed', details: error.errors });
+      
     } else {
       console.error('Error:', error);
       res.status(500).json({ error: 'Internal server error' });
