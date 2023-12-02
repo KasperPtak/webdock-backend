@@ -6,6 +6,10 @@ const CategoryController = require('../controllers/categoryController.js')
 
 const router = express.Router();
 
+// Multer to recieve, and handle files. Later we should add a new table for files and let multer and createpostcontroller handle creating the relation and post+files
+const multer = require('multer');
+const upload = multer();
+
 router.get('/users', UserController.getUserWithRole);
 
 router.get('/postsWithStatus', PostController.getPostsWithStatus);
@@ -14,6 +18,9 @@ router.get('/post/:id', PostController.post); // composite router her senere
 router.get('/merged-post/:id', PostController.mergedPost); // composite router her senere
 router.get('/postUpvotes/:id', PostController.postIsUpvotedBy); // composite router her senere
 
+router.post('/createpost', upload.array('file'), PostController.createNewPost);
+
 router.get('/getCategories', CategoryController.getCategories);
 
 module.exports = router;
+
