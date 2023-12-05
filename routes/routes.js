@@ -3,6 +3,7 @@ const express = require('express');
 const UserController = require('../controllers/userController.js');
 const PostController = require('../controllers/postController.js')
 const CategoryController = require('../controllers/categoryController.js')
+const VerifyController = require ('../controllers/verifyController.js')
 
 const router = express.Router();
 
@@ -15,6 +16,6 @@ router.get('/merged-post/:id', PostController.mergedPost); // composite router h
 router.get('/postUpvotes/:id', PostController.postIsUpvotedBy); // composite router her senere
 
 router.get('/getCategories', CategoryController.getCategories);
-router.post('/handlelogin', UserController.postUser);
+router.post('/handlelogin', VerifyController.verifyUser);
 
 module.exports = router;
