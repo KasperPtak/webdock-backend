@@ -1,5 +1,6 @@
 // routes/userRoutes.js
 const express = require('express');
+const multer = require('multer');
 const UserController = require('../controllers/userController.js');
 const PostController = require('../controllers/postController.js')
 const CategoryController = require('../controllers/categoryController.js')
@@ -7,7 +8,6 @@ const CategoryController = require('../controllers/categoryController.js')
 const router = express.Router();
 
 // Multer to recieve, and handle files. Later we should add a new table for files and let multer and createpostcontroller handle creating the relation and post+files
-const multer = require('multer');
 const upload = multer();
 
 router.get('/users', UserController.getUserWithRole);
