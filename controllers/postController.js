@@ -73,7 +73,17 @@ const post = (req, res) => {
           {
             model: db.Reply,
             separate: true,
+            include: [
+              {
+                model: db.User,
+                attributes: ['name', 'email']
+              }
+            ],
           },
+          {
+            model: db.User,
+            attributes: ['name', 'email']
+          }
         ],
         
       },
