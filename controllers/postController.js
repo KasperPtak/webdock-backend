@@ -75,7 +75,20 @@ const post = (req, res) => {
             separate: true,
           },
         ],
+        
       },
+      {
+      model: db.Status,
+      attributes: ["status"]
+    },
+    {
+      model: db.Category,
+      attributes: ["category"]
+    },
+    {
+      model: db.User,
+      attributes: ['name', 'email']
+    }
     ],
   })
     .then((post) => {

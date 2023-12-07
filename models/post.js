@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'category_id'
       })
 
+      Post.belongsTo(models.User, {
+        foreignKey: 'user_id'
+      })
+
       Post.hasMany(models.Comment, { 
         foreignKey: 'post_id' 
       });
