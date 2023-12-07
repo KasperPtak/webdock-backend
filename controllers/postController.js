@@ -110,19 +110,19 @@ const postIsUpvotedBy = (req, res) => {
     include: [
       {
         model: db.User,
-        attributes: ['username', 'profile_picture', 'email']
+        attributes: ['name', 'avatarURL', 'email']
       }
     ]
   })
     .then((upvotes) => {
-      // Extract usernames and profile pictures from the upvotes
-      const userInformation = upvotes.map((upvote) => ({
-        username: upvote.User.username,
-        profile_picture: upvote.User.profile_picture,
-        email: upvote.User.email
-      }));
+      const totalUpvotes = upvotes.length;
 
-      res.json(userInformation);
+      res.json(
+        {
+          upvotes: upvotes, 
+          totalUpvotes: totalUpvotes
+        }
+      );
     })
     .catch((error) => {
       console.error(error);

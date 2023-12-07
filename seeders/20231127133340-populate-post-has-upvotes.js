@@ -5,25 +5,25 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('PostHasUpvotes', [
       {
-        user_id: 1,
+        user_id: 2200,
         post_id: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        user_id: 2,
+        user_id: 2201,
         post_id: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        user_id: 3,
+        user_id: 2203,
         post_id: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        user_id: 10,
+        user_id: 2204,
         post_id: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
