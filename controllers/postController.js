@@ -142,10 +142,42 @@ const mergedPost = (req, res) => {
     });
 };
 
+const createNewPost = async (req, res) => {
+  try {
+    // body:formdata fromn the frontend
+    const { title, content, user_id } = req.body;
+    const files = req.files;
+    
+    const image = files.map(file => file.originalname).join(', ');
+
+    const result = await db.Post.create({
+      category_id: 1,
+      status_id: 1,
+      upvotes: 0,
+      title,
+      content,
+      user_id,
+      image: image,
+    });
+
+    res.status(201).json({ message: 'Data saved successfully', data: result });
+  } catch (error) {
+    // sequelize error:
+    if (error.name === 'SequelizeValidationError') {
+      res.status(400).json({ error: 'Validation failed', details: error.errors });
+      
+    } else {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+};
+
 module.exports = {
   getPostsWithStatus,
   getAllPostsByStatus,
   postIsUpvotedBy,
   post,
-  mergedPost
+  mergedPost,
+  createNewPost
 };
