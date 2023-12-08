@@ -4,7 +4,6 @@ const cors = require('cors');
 const verifyController = require('./controllers/verifyController.js')
 const port = 8080; // Your desired port number
 
-
 const app = express();
 app.use(cors(
   {origin: "*"}

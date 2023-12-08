@@ -214,6 +214,28 @@ const createNewPost = async (req, res) => {
   }
 };
 
+const changeStatus = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const newStatus = req.params.status;
+
+    const post = await db.Post.findByPk(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    const oldStatus = post.status_id;
+    post.status_id = newStatus;
+
+    await post.save();
+
+    res.status(200).json({ message: 'Post status updated successfully', postId, oldStatus, newStatus });
+  } catch (error) {
+    console.error('Error changing post status:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
 module.exports = {
   getPostsWithStatus,
   getAllPostsByStatus,
@@ -221,5 +243,6 @@ module.exports = {
   post,
   mergedPost,
   createNewPost,
+  changeStatus
 };
 

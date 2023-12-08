@@ -15,9 +15,11 @@ router.get('/users', UserController.getUserWithRole);
 
 router.get('/postsWithStatus', PostController.getPostsWithStatus);
 router.get('/getAllPostsByStatus/:postStatus', PostController.getAllPostsByStatus);
-router.get('/post/:id', PostController.post); // composite router her senere
-router.get('/merged-post/:id', PostController.mergedPost); // composite router her senere
-router.get('/postUpvotes/:id', PostController.postIsUpvotedBy); // composite router her senere
+router.get('/post/:id', PostController.post); 
+router.get('/merged-post/:id', PostController.mergedPost); 
+router.get('/postUpvotes/:id', PostController.postIsUpvotedBy); 
+
+router.get('/changePostStatus/:id/status/:status', PostController.changeStatus); 
 
 router.post('/createpost', upload.array('file'), PostController.createNewPost);
 
