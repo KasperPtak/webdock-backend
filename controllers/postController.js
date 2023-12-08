@@ -1,5 +1,5 @@
 // controllers/userController.js
-const db = require("../models"); // Import your Sequelize instance
+const db = require("../models"); 
 const category = require("../models/category");
 
 const getPostsWithStatus = (req, res) => {
@@ -20,7 +20,6 @@ const getPostsWithStatus = (req, res) => {
     ],
   })
     .then((posts) => {
-      // Your response handling logic here
       res.json(posts);
     })
     .catch((error) => {
@@ -29,14 +28,9 @@ const getPostsWithStatus = (req, res) => {
     });
 };
 
-// REMOVE
-// What the fuck were we thinking, this is smarter - Tak niller :*//
 const getAllPostsByStatus = (req, res) => {
   const postStatus = req.params.postStatus;
   db.Post.findAll({
-    where: {
-      /* your conditions here */
-    },
     include: [
       {
         model: db.Status,
@@ -166,23 +160,12 @@ const mergedPost = (req, res) => {
 
 const createNewPost = async (req, res) => {
   try {
-    // body:formdata fromn the frontend
-    const { title, content, user_id } = req.body;
+    const { title, content, user_id, category_id } = req.body;
     const files = req.files;
 
     const image = files.map((file) => file.originalname).join(", ");
 
-    const result = await db.Post.create({
-      category_id: 1,
-      status_id: 1,
-      upvotes: 0,
-      title,
-      content,
-      user_id: parseInt(user_id, 10),
-      // user_id,
-      image: image,
-    });
-
+    
     const externalEndpoint =
       "https://webdock.io/en/platform_data/feature_requests/new";
     const externalData = {
@@ -199,18 +182,32 @@ const createNewPost = async (req, res) => {
       },
       body: JSON.stringify(externalData),
     });
-    const responseData = await response.json(); // Assuming the response is in JSON format
-    console.log("external data:", externalData);
+    const responseData = await response.json();
+    const newPostID = responseData.id;
+    console.log(newPostID)
+    const result = await db.Post.create({
+      id: newPostID,
+      status_id: 1,
+      upvotes: 0,
+      category_id,
+      title,
+      content,
+      user_id: parseInt(user_id, 10),
+      image: image,
+    });
+    
     console.log("External API Response:", responseData);
-
     res.status(201).json({ message: "Data saved successfully", data: result });
+
   } catch (error) {
-    // sequelize error:
+    
+    // sequelize error handling:
     if (error.name === "SequelizeValidationError") {
       res
         .status(400)
         .json({ error: "Validation failed", details: error.errors });
     } else {
+      // other errors:
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
@@ -225,3 +222,4 @@ module.exports = {
   mergedPost,
   createNewPost,
 };
+
