@@ -15,8 +15,8 @@ const getPostsWithStatus = (req, res) => {
       },
       {
         model: db.Comment,
-        attributes: ["content"]
-      }
+        attributes: ["content"],
+      },
     ],
   })
     .then((posts) => {
@@ -34,12 +34,14 @@ const getPostsWithStatus = (req, res) => {
 const getAllPostsByStatus = (req, res) => {
   const postStatus = req.params.postStatus;
   db.Post.findAll({
-    where: { /* your conditions here */ },
+    where: {
+      /* your conditions here */
+    },
     include: [
       {
         model: db.Status,
         where: { status: postStatus },
-        attributes: ['status']
+        attributes: ["status"],
       },
       {
         model: db.Comment,
@@ -47,8 +49,8 @@ const getAllPostsByStatus = (req, res) => {
       },
       {
         model: db.Category,
-        attributes: ['category']
-      }
+        attributes: ["category"],
+      },
     ],
   })
     .then((posts) => {
@@ -76,29 +78,28 @@ const post = (req, res) => {
             include: [
               {
                 model: db.User,
-                attributes: ['name', 'email']
-              }
+                attributes: ["name", "email"],
+              },
             ],
           },
           {
             model: db.User,
-            attributes: ['name', 'email']
-          }
+            attributes: ["name", "email"],
+          },
         ],
-        
       },
       {
-      model: db.Status,
-      attributes: ["status"]
-    },
-    {
-      model: db.Category,
-      attributes: ["category"]
-    },
-    {
-      model: db.User,
-      attributes: ['name', 'email']
-    }
+        model: db.Status,
+        attributes: ["status"],
+      },
+      {
+        model: db.Category,
+        attributes: ["category"],
+      },
+      {
+        model: db.User,
+        attributes: ["name", "email"],
+      },
     ],
   })
     .then((post) => {
@@ -115,24 +116,22 @@ const postIsUpvotedBy = (req, res) => {
 
   db.PostHasUpvote.findAll({
     where: {
-      post_id: postId
+      post_id: postId,
     },
     include: [
       {
         model: db.User,
-        attributes: ['name', 'avatarURL', 'email']
-      }
-    ]
+        attributes: ["name", "avatarURL", "email"],
+      },
+    ],
   })
     .then((upvotes) => {
       const totalUpvotes = upvotes.length;
 
-      res.json(
-        {
-          upvotes: upvotes, 
-          totalUpvotes: totalUpvotes
-        }
-      );
+      res.json({
+        upvotes: upvotes,
+        totalUpvotes: totalUpvotes,
+      });
     })
     .catch((error) => {
       console.error(error);
@@ -145,17 +144,17 @@ const mergedPost = (req, res) => {
 
   db.MergedPost.findAll({
     where: {
-      master_post: postId
+      master_post: postId,
     },
     include: [
       {
         model: db.Post,
-        attributes: ["Title"]
+        attributes: ["Title"],
       },
     ],
   })
     .then((posts) => {
-      const postContents = posts.map(post => post.Post);
+      const postContents = posts.map((post) => post.Post);
 
       res.json(postContents);
     })
@@ -170,8 +169,8 @@ const createNewPost = async (req, res) => {
     // body:formdata fromn the frontend
     const { title, content, user_id } = req.body;
     const files = req.files;
-    
-    const image = files.map(file => file.originalname).join(', ');
+
+    const image = files.map((file) => file.originalname).join(", ");
 
     const result = await db.Post.create({
       category_id: 1,
@@ -179,19 +178,41 @@ const createNewPost = async (req, res) => {
       upvotes: 0,
       title,
       content,
-      user_id,
+      user_id: parseInt(user_id, 10),
+      // user_id,
       image: image,
     });
 
-    res.status(201).json({ message: 'Data saved successfully', data: result });
+    const externalEndpoint =
+      "https://webdock.io/en/platform_data/feature_requests/new";
+    const externalData = {
+      userID: parseInt(user_id, 10),
+      title: title,
+      description: content,
+      category: 1,
+    };
+
+    const response = await fetch(externalEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(externalData),
+    });
+    const responseData = await response.json(); // Assuming the response is in JSON format
+    console.log("external data:", externalData);
+    console.log("External API Response:", responseData);
+
+    res.status(201).json({ message: "Data saved successfully", data: result });
   } catch (error) {
     // sequelize error:
-    if (error.name === 'SequelizeValidationError') {
-      res.status(400).json({ error: 'Validation failed', details: error.errors });
-      
+    if (error.name === "SequelizeValidationError") {
+      res
+        .status(400)
+        .json({ error: "Validation failed", details: error.errors });
     } else {
-      console.error('Error:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 };
@@ -202,5 +223,5 @@ module.exports = {
   postIsUpvotedBy,
   post,
   mergedPost,
-  createNewPost
+  createNewPost,
 };
