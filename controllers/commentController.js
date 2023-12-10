@@ -8,6 +8,10 @@ const getComment = (req, res) => {
         model: db.User,
         attributes: ["name", "email"],
       },
+      {
+        model: db.Post, 
+        attributes: ["title", "content"],
+      },
     ],
   })
     .then((comments) => {
@@ -41,16 +45,17 @@ const comment = (req, res) => {
   
   const createNewComment = async (req, res) => {
     try {
-      const { id, content, user_id } = req.body;
+      const { content, user_id, post_id } = req.body;
 
-      
+      console.log("Request Body:", req.body);
+
       const externalEndpoint =
         "https://webdock.io/en/platform_data/feature_requests/new";
       const externalData = {
         userID: parseInt(user_id, 10),
         description: content,
       };
-  
+      console.log("Sending to external API:", externalData);
       const response = await fetch(externalEndpoint, {
         method: "POST",
         headers: {
@@ -65,6 +70,7 @@ const comment = (req, res) => {
         id: newCommentID,
         content,
         user_id: parseInt(user_id, 10),
+        post_id
       });
       
       console.log("External API Response:", responseData);
