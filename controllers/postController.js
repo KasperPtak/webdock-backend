@@ -236,6 +236,24 @@ const changeStatus = async (req, res) => {
   }
 }
 
+const deleteItemById = async (req, res) => {
+  const itemId = req.params.id;
+
+  try {
+    const itemToDelete = await db.Post.findByPk(itemId);
+
+    if (itemToDelete) {
+      await itemToDelete.destroy();
+      return res.status(204).send(); // 204 No Content indicates successful deletion
+    } else {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   getPostsWithStatus,
   getAllPostsByStatus,
@@ -243,6 +261,7 @@ module.exports = {
   post,
   mergedPost,
   createNewPost,
-  changeStatus
+  changeStatus,
+  deleteItemById
 };
 
