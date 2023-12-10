@@ -5,6 +5,7 @@ const UserController = require('../controllers/userController.js');
 const PostController = require('../controllers/postController.js')
 const CategoryController = require('../controllers/categoryController.js')
 const VerifyController = require ('../controllers/verifyController.js')
+const CommentController = require ('../controllers/commentController.js')
 
 const router = express.Router();
 
@@ -25,6 +26,8 @@ router.post('/createpost', upload.array('file'), PostController.createNewPost);
 
 router.get('/getCategories', CategoryController.getCategories);
 router.post('/handlelogin', VerifyController.verifyUser);
+
+router.post('/createcomment', CommentController.createNewComment);
 
 module.exports = router;
 

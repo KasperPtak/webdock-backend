@@ -245,4 +245,3 @@ module.exports = {
   createNewPost,
   changeStatus
 };
-
