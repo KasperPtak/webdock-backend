@@ -2,13 +2,16 @@ const express = require('express');
 const routes = require('./routes/routes');
 const cors = require('cors');
 const verifyController = require('./controllers/verifyController.js')
-const port = 8080; // Your desired port number
+const port = 8080; 
+const { cronSchedueler } = require('./tasks/scheduler.js')
 
 const app = express();
 app.use(cors(
   {origin: "*"}
 ))
 app.use(express.json());
+
+cronSchedueler();
 
 app.use('/api/v1', routes);
 app.post('/verify', verifyController.verifyUser);
