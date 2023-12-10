@@ -27,6 +27,7 @@ const comment = (req, res) => {
     const commentId = req.params.id;
   
     db.Comment.findByPk(commentId, {
+
         include: [
             {
               model: db.User,
@@ -54,6 +55,7 @@ const comment = (req, res) => {
       const externalData = {
         userID: parseInt(user_id, 10),
         description: content,
+        postID: parseInt(post_id, 10)
       };
       console.log("Sending to external API:", externalData);
       const response = await fetch(externalEndpoint, {
