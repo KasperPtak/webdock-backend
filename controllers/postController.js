@@ -1,5 +1,5 @@
 // controllers/userController.js
-const db = require("../models"); 
+const db = require("../models");
 const category = require("../models/category");
 
 const getPostsWithStatus = (req, res) => {
@@ -165,7 +165,7 @@ const createNewPost = async (req, res) => {
 
     const image = files.map((file) => file.originalname).join(", ");
 
-    
+
     const externalEndpoint =
       "https://webdock.io/en/platform_data/feature_requests/new";
     const externalData = {
@@ -195,12 +195,12 @@ const createNewPost = async (req, res) => {
       user_id: parseInt(user_id, 10),
       image: image,
     });
-    
+
     console.log("External API Response:", responseData);
     res.status(201).json({ message: "Data saved successfully", data: result });
 
   } catch (error) {
-    
+
     // sequelize error handling:
     if (error.name === "SequelizeValidationError") {
       res
