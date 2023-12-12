@@ -158,6 +158,35 @@ const mergedPost = (req, res) => {
     });
 };
 
+const createMerge = async (req, res) => {
+  const postId = req.params.id;
+  const parentId = req.params.parentId;
+
+  try {
+    const post = await db.Post.findByPk(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    post.status_id = 5; 
+
+    await post.save();
+
+    const createdPost = await db.MergedPost.create({
+      master_post: parentId,
+      child_post: postId,
+    });
+
+    res.json(createdPost);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+
+
 const createNewPost = async (req, res) => {
   try {
     const { title, content, user_id, category_id } = req.body;
@@ -257,6 +286,7 @@ module.exports = {
   postIsUpvotedBy,
   post,
   mergedPost,
+  createMerge,
   createNewPost,
   changeStatus,
   deleteItemById

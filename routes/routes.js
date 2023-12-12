@@ -20,10 +20,12 @@ router.get('/post/:id', PostController.post);
 router.get('/merged-post/:id', PostController.mergedPost); 
 router.get('/postUpvotes/:id', PostController.postIsUpvotedBy); 
 
-router.get('/changePostStatus/:id/status/:status', PostController.changeStatus); 
+router.patch('/changePostStatus/:id/status/:status', PostController.changeStatus); 
 router.delete('/items/:id', PostController.deleteItemById);
 
 router.post('/createpost', upload.array('file'), PostController.createNewPost);
+router.post('/createmerge/:id/newparent/:parentId', PostController.createMerge); 
+
 
 router.get('/getCategories', CategoryController.getCategories);
 router.post('/handlelogin', VerifyController.verifyUser);
