@@ -1,21 +1,26 @@
 // controllers/userController.js
 const db = require("../models");
 const category = require("../models/category");
-const sequelize = require("sequelize")
+const sequelize = require("sequelize");
 
 const getPostsWithStatus = (req, res) => {
   db.Post.findAll({
     attributes: [
-      'id',
-      'title',
-      'content',
-      'comment_id',
-      'category_id',
-      'user_id',
-      'status_id',
-      'createdAt',
-      'updatedAt',
-      [sequelize.literal('(SELECT COUNT(*) FROM PostHasUpvotes WHERE PostHasUpvotes.post_id = Post.id)'), 'upvoteCount'],
+      "id",
+      "title",
+      "content",
+      "comment_id",
+      "category_id",
+      "user_id",
+      "status_id",
+      "createdAt",
+      "updatedAt",
+      [
+        sequelize.literal(
+          "(SELECT COUNT(*) FROM PostHasUpvotes WHERE PostHasUpvotes.post_id = Post.id)"
+        ),
+        "upvoteCount",
+      ],
     ],
     include: [
       {
@@ -41,21 +46,25 @@ const getPostsWithStatus = (req, res) => {
     });
 };
 
-
 const getAllPostsByStatus = (req, res) => {
   const postStatus = req.params.postStatus;
   db.Post.findAll({
     attributes: [
-      'id',
-      'title',
-      'content',
-      'comment_id',
-      'category_id',
-      'user_id',
-      'status_id',
-      'createdAt',
-      'updatedAt',
-      [sequelize.literal('(SELECT COUNT(*) FROM PostHasUpvotes WHERE PostHasUpvotes.post_id = Post.id)'), 'upvoteCount'],
+      "id",
+      "title",
+      "content",
+      "comment_id",
+      "category_id",
+      "user_id",
+      "status_id",
+      "createdAt",
+      "updatedAt",
+      [
+        sequelize.literal(
+          "(SELECT COUNT(*) FROM PostHasUpvotes WHERE PostHasUpvotes.post_id = Post.id)"
+        ),
+        "upvoteCount",
+      ],
     ],
     include: [
       {
@@ -70,7 +79,7 @@ const getAllPostsByStatus = (req, res) => {
       {
         model: db.Category,
         attributes: ["category"],
-      }
+      },
     ],
   })
     .then((posts) => {
@@ -192,7 +201,7 @@ const createMerge = async (req, res) => {
     const post = await db.Post.findByPk(postId);
 
     if (!post) {
-      return res.status(404).json({ error: 'Post not found' });
+      return res.status(404).json({ error: "Post not found" });
     }
 
     post.status_id = 5;
@@ -211,14 +220,13 @@ const createMerge = async (req, res) => {
   }
 };
 
-
-
 const createNewPost = async (req, res) => {
   try {
     const { title, content, user_id, category_id } = req.body;
     const files = req.files;
     const image = files.map((file) => file.originalname).join(", ");
-    const externalEndpoint = "https://webdock.io/en/platform_data/feature_requests/new";
+    const externalEndpoint =
+      "https://webdock.io/en/platform_data/feature_requests/new";
 
     const externalData = {
       userID: parseInt(user_id, 10),
@@ -236,7 +244,7 @@ const createNewPost = async (req, res) => {
     });
     const responseData = await response.json();
     const newPostID = responseData.id;
-    console.log(newPostID)
+    console.log(newPostID);
     const result = await db.Post.create({
       id: newPostID,
       status_id: 1,
@@ -250,9 +258,7 @@ const createNewPost = async (req, res) => {
 
     console.log("External API Response:", responseData);
     res.status(201).json({ message: "Data saved successfully", data: result });
-
   } catch (error) {
-
     // sequelize error handling:
     if (error.name === "SequelizeValidationError") {
       res
@@ -274,19 +280,24 @@ const changeStatus = async (req, res) => {
     const post = await db.Post.findByPk(postId);
 
     if (!post) {
-      return res.status(404).json({ error: 'Post not found' });
+      return res.status(404).json({ error: "Post not found" });
     }
     const oldStatus = post.status_id;
     post.status_id = newStatus;
 
     await post.save();
 
-    res.status(200).json({ message: 'Post status updated successfully', postId, oldStatus, newStatus });
+    res.status(200).json({
+      message: "Post status updated successfully",
+      postId,
+      oldStatus,
+      newStatus,
+    });
   } catch (error) {
-    console.error('Error changing post status:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error changing post status:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-}
+};
 
 const deleteItemById = async (req, res) => {
   const itemId = req.params.id;
@@ -298,11 +309,48 @@ const deleteItemById = async (req, res) => {
       await itemToDelete.destroy();
       return res.status(204).send(); // 204 No Content indicates successful deletion
     } else {
-      return res.status(404).json({ error: 'Item not found' });
+      return res.status(404).json({ error: "Item not found" });
     }
   } catch (error) {
-    console.error('Error deleting item:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error deleting item:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const upvotePost = async (req, res) => {
+  const postId = req.params.id;
+  const user = req.body;
+
+  try {
+    const post = await db.Post.findByPk(postId);
+
+     const existingUpvote = await db.PostHasUpvote.findOne({
+      where: {
+        post_id: postId,
+        user_id: user.id,
+      },
+    });
+
+    if (existingUpvote) {
+      await existingUpvote.destroy();
+      return res.json({ success: true, message: "Upvote removed successfully!" });
+    }
+    
+    const createdUpvote = await db.PostHasUpvote.create({
+      post_id: postId,
+      user_id: user.id,
+    });
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    console.log(user.id);
+
+    res.json({ success: true, message: "Upvote successful!", createdUpvote });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -315,6 +363,6 @@ module.exports = {
   createMerge,
   createNewPost,
   changeStatus,
-  deleteItemById
+  deleteItemById,
+  upvotePost,
 };
-

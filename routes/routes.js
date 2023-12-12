@@ -21,6 +21,7 @@ router.get('/merged-post/:id', PostController.mergedPost);
 router.get('/postUpvotes/:id', PostController.postIsUpvotedBy); 
 
 router.patch('/changePostStatus/:id/status/:status', PostController.changeStatus); 
+router.patch('/upvotepost/:id', PostController.upvotePost); 
 router.delete('/items/:id', PostController.deleteItemById);
 
 router.post('/createpost', upload.array('file'), PostController.createNewPost);
