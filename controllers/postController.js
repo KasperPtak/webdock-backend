@@ -1,9 +1,22 @@
 // controllers/userController.js
 const db = require("../models");
 const category = require("../models/category");
+const sequelize = require("sequelize")
 
 const getPostsWithStatus = (req, res) => {
   db.Post.findAll({
+    attributes: [
+      'id',
+      'title',
+      'content',
+      'comment_id',
+      'category_id',
+      'user_id',
+      'status_id',
+      'createdAt',
+      'updatedAt',
+      [sequelize.literal('(SELECT COUNT(*) FROM PostHasUpvotes WHERE PostHasUpvotes.post_id = Post.id)'), 'upvoteCount'],
+    ],
     include: [
       {
         model: db.Status,
@@ -28,9 +41,22 @@ const getPostsWithStatus = (req, res) => {
     });
 };
 
+
 const getAllPostsByStatus = (req, res) => {
   const postStatus = req.params.postStatus;
   db.Post.findAll({
+    attributes: [
+      'id',
+      'title',
+      'content',
+      'comment_id',
+      'category_id',
+      'user_id',
+      'status_id',
+      'createdAt',
+      'updatedAt',
+      [sequelize.literal('(SELECT COUNT(*) FROM PostHasUpvotes WHERE PostHasUpvotes.post_id = Post.id)'), 'upvoteCount'],
+    ],
     include: [
       {
         model: db.Status,
@@ -44,7 +70,7 @@ const getAllPostsByStatus = (req, res) => {
       {
         model: db.Category,
         attributes: ["category"],
-      },
+      }
     ],
   })
     .then((posts) => {
@@ -169,7 +195,7 @@ const createMerge = async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    post.status_id = 5; 
+    post.status_id = 5;
 
     await post.save();
 
