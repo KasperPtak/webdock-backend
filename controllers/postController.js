@@ -162,12 +162,9 @@ const createNewPost = async (req, res) => {
   try {
     const { title, content, user_id, category_id } = req.body;
     const files = req.files;
-
     const image = files.map((file) => file.originalname).join(", ");
+    const externalEndpoint = "https://webdock.io/en/platform_data/feature_requests/new";
 
-
-    const externalEndpoint =
-      "https://webdock.io/en/platform_data/feature_requests/new";
     const externalData = {
       userID: parseInt(user_id, 10),
       title: title,
