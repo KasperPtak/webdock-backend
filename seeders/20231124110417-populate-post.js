@@ -5,6 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Posts', [
       {
+        id: 1,
         title: 'Introduction to JavaScript',
         upvotes: 120,
         content: 'Just wanted to share my excitement about learning JavaScript. It opens up a whole new world of possibilities!',
@@ -18,6 +19,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 2,
         title: 'Test post #2',
         upvotes: 120,
         content: 'Just wanted to share my excitement about learning JavaScript. It opens up a whole new world of possibilities!',
@@ -31,6 +33,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 3,
         title: 'Best Frameworks for Web Development',
         upvotes: 85,
         content: 'What are your favorite frameworks for web development? Ive been using React, but I want to explore others.',
@@ -44,6 +47,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 4,
         title: 'Tips for Efficient Coding',
         upvotes: 42,
         content: 'Share your tips for writing efficient and clean code. Ill start: Always use meaningful variable names!',
@@ -57,6 +61,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 5,
         title: 'Tips for Efficient Coding 2',
         upvotes: 42,
         content: 'Share your tips for writing efficient and clean code. Ill start: Always use meaningful variable names!',
@@ -70,6 +75,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 6,
         title: 'Tips for Efficient Coding 3',
         upvotes: 42,
         content: 'Share your tips for writing efficient and clean code. Ill start: Always use meaningful variable names!',
@@ -83,6 +89,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 7,
         title: 'Favorite Programming Books',
         upvotes: 18,
         content: 'Looking for some good programming books. Any recommendations?',
@@ -96,6 +103,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 8,
         title: 'Debugging Challenges',
         upvotes: 55,
         content: 'Share your most challenging debugging experiences and how you overcame them. Let\'s learn from each other!',
@@ -109,6 +117,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 9,
         title: 'Debugging Challenges',
         upvotes: 55,
         content: 'Share your most challenging debugging experiences and how you overcame them. Let\'s learn from each other!',
@@ -122,7 +131,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        title: 'Debugging Challenges',
+        id: 10,
+        title: 'Change My Status',
         upvotes: 55,
         content: 'Share your most challenging debugging experiences and how you overcame them. Let\'s learn from each other!',
         comment_id: 156,

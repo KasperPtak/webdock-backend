@@ -14,12 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       PostHasUpvote.belongsTo(models.Post, {
         foreignKey: 'post_id'
       }),
-      PostHasUpvote.belongsTo(models.User, {
-        foreignKey: 'user_id'
-      })
+        PostHasUpvote.belongsTo(models.User, {
+          foreignKey: 'user_id'
+        })
     }
 
-    
   }
   PostHasUpvote.init({
     post_id: DataTypes.INTEGER,
