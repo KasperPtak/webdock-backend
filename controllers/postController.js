@@ -178,7 +178,7 @@ const mergedPost = (req, res) => {
     include: [
       {
         model: db.Post,
-        attributes: ["Title"],
+        attributes: ["Title", "Id"],
       },
     ],
   })
