@@ -12,6 +12,10 @@ app.use(cors(
 app.use(express.json());
 
 cronSchedueler();
+const mailer = require('express-mailer');
+const mailerConfig = require('./config/emailConfig/emailConfig.js');
+
+mailer.extend(app, mailerConfig);
 
 app.use('/api/v1', routes);
 app.post('/verify', verifyController.verifyUser);

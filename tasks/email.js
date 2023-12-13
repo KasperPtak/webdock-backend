@@ -1,77 +1,33 @@
-// service: 'gmail',
+const postmark = require('postmark');
+const mailerConfig = require('../config/emailConfig/emailConfig');
 
-// service: 'your-smtp-service',
-// host: 'your-smtp-server.com',
-// port: 587,
-// secure: false, // Set to true if using SSL/TLS
+const ejs = require('ejs');
+const fs = require('fs');
+const path = require('path');
 
+function sendEmailToAdmin(posts) {
+    let templatePath = path.join(__dirname, "../config/emailConfig/emailTemplate.ejs");
 
-
-const nodemailer = require('nodemailer');
-
-function sendEmailToAdmin(newPosts) {
-    const transporter = nodemailer.createTransport({
-        // Use configuration from environment variables or another source
-        service: process.env.EMAIL_SERVICE,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASSWORD,
-        },
-    });
-
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: process.env.ADMIN_EMAIL,
-        subject: 'Changes in the Database',
-        text: `New Posts: ${newPosts.length}`,
+    const client = new postmark.ServerClient(mailerConfig.auth.user);
+    
+    const template = fs.readFileSync(templatePath, 'utf-8');
+  
+    const renderedTemplate = ejs.render(template, { posts });
+  
+    const message = {
+      From: mailerConfig.from,
+      To: 'kmfp32171@edu.ucl.dk', 
+      Subject: 'Posts Updated in the Last 24 Hours',
+      HtmlBody: renderedTemplate,
     };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-}
+  
+    client.sendEmail(message)
+      .then((response) => {
+        console.log('Email sent: ', response);
+      })
+      .catch((error) => {
+        console.error('Error sending email: ', error);
+      });
+};
 
 module.exports = { sendEmailToAdmin };
-
-// TEMP STUFF RN
-
-// // DUMMY EMAILS FOR TESTING PURPOSES
-// const DUMMY_EMAIL_SERVICE = 'dummy_email_service';
-// const DUMMY_EMAIL_USER = 'dummy_email@example.com';
-// const DUMMY_EMAIL_PASSWORD = 'dummy_password';
-// const DUMMY_ADMIN_EMAIL = 'admin@example.com';
-
-// const nodemailer = require('nodemailer');
-
-// function sendEmailToAdmin(newPosts) {
-//     const transporter = nodemailer.createTransport({
-//         // Use configuration from environment variables or another source
-//         service: DUMMY_EMAIL_SERVICE,  // Use dummy email service
-//         auth: {
-//             user: DUMMY_EMAIL_USER,  // Use dummy email user
-//             pass: DUMMY_EMAIL_PASSWORD,  // Use dummy email password
-//         },
-//     });
-
-//     const mailOptions = {
-//         from: DUMMY_EMAIL_USER,  // Use dummy email user as sender
-//         to: DUMMY_ADMIN_EMAIL,  // Send to dummy admin email
-//         subject: 'Changes in the Database',
-//         text: `New Posts: ${newPosts.length}`,
-//     };
-
-//     transporter.sendMail(mailOptions, (error, info) => {
-//         if (error) {
-//             console.error(error);
-//         } else {
-//             console.log('Email sent: ' + info.response);
-//         }
-//     });
-// }
-
-// module.exports = { sendEmailToAdmin };
-
