@@ -4,10 +4,10 @@ const { Post } = require('../models');
 const { sendEmailToAdmin } = require('./email');
 
 async function checkAndSendChanges() {
-		console.log("cron funtion run, in tasks.js");
+		// console.log("cron funtion run, in tasks.js");
         try {
             const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000); 
-            console.log(twentyFourHoursAgo)
+            // console.log(twentyFourHoursAgo)
             const posts = await Post.findAll({
               where: {
                 [Op.or]: [ //Op.or = logical OR operation in a WHERE clause
@@ -16,7 +16,7 @@ async function checkAndSendChanges() {
                 ],
               },
             });
-            console.log('Posts within the last 24 hours:', posts.length);
+            // console.log('Posts within the last 24 hours:', posts.length);
             sendEmailToAdmin(posts);
         
           } catch (error) {
