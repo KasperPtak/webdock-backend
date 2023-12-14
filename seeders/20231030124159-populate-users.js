@@ -73,6 +73,13 @@ module.exports = {
           email: 'jacka@webdock.io',
           createdAt: new Date(),
           updatedAt: new Date(),
+        },
+        {
+          id: 2210,
+          name: 'Mikkel',
+          email: 'mikkel@edu.ucl.dk',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         }
   ], {});
   
