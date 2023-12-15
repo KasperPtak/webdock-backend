@@ -13,7 +13,7 @@ const CommentController = require ('../controllers/commentController.js')
 // api routing
 const router = express.Router();
 
-router.get('/users', UserController.getUserWithRole);z
+router.get('/users', UserController.getUserWithRole);
 
 router.get('/postsWithStatus', PostController.getPostsWithStatus);
 router.get('/getAllPostsByStatus/:postStatus', PostController.getAllPostsByStatus);
