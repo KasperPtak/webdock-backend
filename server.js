@@ -2,7 +2,7 @@ const express = require('express');
 const routes = require('./routes/routes');
 const cors = require('cors');
 const verifyController = require('./controllers/verifyController.js')
-const port = 80; 
+const port = 1234; 
 const { cronSchedueler } = require('./tasks/scheduler.js')
 
 const app = express();
