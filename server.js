@@ -19,8 +19,8 @@ mailer.extend(app, mailerConfig);
 app.use('/api/v1', routes);
 app.post('/verify', verifyController.verifyUser);
 
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/fullchain.pem', 'utf8');
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/kmfpgroup5.vps.webdock.cloud/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/kmfpgroup5.vps.webdock.cloud/fullchain.pem', 'utf8');
 const credentials = { key: privateKey, cert: certificate };
 
 const httpsServer = https.createServer(credentials, app);
