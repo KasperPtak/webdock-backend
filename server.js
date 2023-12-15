@@ -7,7 +7,7 @@ const verifyController = require('./controllers/verifyController.js');
 const { cronSchedueler } = require('./tasks/scheduler.js');
 
 const app = express();
-app.use(cors({ origin: "*" }));
+app.use(cors());
 app.use(express.json());
 
 cronSchedueler();
