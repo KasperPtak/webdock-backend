@@ -80,6 +80,13 @@ module.exports = {
           email: 'mikkel@edu.ucl.dk',
           createdAt: new Date(),
           updatedAt: new Date(),
+        },
+        {
+          id: 22654,
+          name: 'Alvi Møller',
+          email: 'ahmo38299@edu.ucl.dk',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         }
   ], {});
   
