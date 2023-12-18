@@ -107,7 +107,7 @@ const post = (req, res) => {
             include: [
               {
                 model: db.User,
-                attributes: ["name", "email"],
+                attributes: ["name", "email",],
               },
             ],
           },
@@ -127,7 +127,7 @@ const post = (req, res) => {
       },
       {
         model: db.User,
-        attributes: ["name", "email"],
+        attributes: ["name", "email", "id"],
       },
     ],
   })
