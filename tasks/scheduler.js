@@ -7,7 +7,6 @@ function cronSchedueler() {
   cron.schedule("0 0 */1 * *", async () => {
     checkAndSendChanges();
     // console.log("cron run");
-    // await checkAndSendChanges(); skal det være async?
   });
 }
 
