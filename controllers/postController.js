@@ -267,7 +267,7 @@ const createNewPost = async (req, res) => {
     } else {
       // other errors:
       console.error("Error:", error);
-      res.status(500).json({ error: "Internal server error", user_id });
+      res.status(500).json({ error: "Internal server error" + user_id });
     }
   }
 };
