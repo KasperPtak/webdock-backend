@@ -256,6 +256,7 @@ const createNewPost = async (req, res) => {
       image: image,
     });
 
+
     console.log("External API Response:", responseData);
     res.status(201).json({ message: "Data saved successfully", data: result });
   } catch (error) {
