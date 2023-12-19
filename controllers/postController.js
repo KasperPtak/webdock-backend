@@ -128,6 +128,7 @@ const post = (req, res) => {
       {
         model: db.User,
         attributes: ["name", "email", "id"],
+        
       },
     ],
   })
